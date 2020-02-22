@@ -26,5 +26,5 @@ function addRandomFact() {
   // Pick a random fact.	
   const fact = facts[Math.floor(Math.random() * facts.length)];
   const factContainer = document.getElementById('fact-container');
-  factContainer.innerText = "\n" + fact;
+  factContainer.innerText = fact;
 }
