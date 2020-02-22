@@ -13,9 +13,18 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random fact to the page.
  */
-function addRandomGreeting() {
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = "I have been to over 30 states in the United States.";
+function addRandomFact() {
+    const facts =	
+    [
+        "I have been to over 30 states in the United States.", 
+        "I am the oldest of two children.",
+        "I can speak Spanish."
+    ];	
+
+  // Pick a random fact.	
+  const fact = facts[Math.floor(Math.random() * facts.length)];
+  const factContainer = document.getElementById('fact-container');
+  factContainer.innerText = "\n" + fact;
 }
