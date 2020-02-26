@@ -28,3 +28,17 @@ function addRandomFact() {
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = fact;
 }
+
+/**
+ * Uses fetch() to obtain data from DataServlet.java
+ */
+ function obtain_fetch_data() {
+     fetch("/data")
+     .then(response => response.text())
+     .then(text => {
+         document.getElementById("fetch-div").innerText = text;
+     })
+     .catch(() => {
+         document.getElementById("fetch-div").innerText = "Error!";
+     })
+ }
