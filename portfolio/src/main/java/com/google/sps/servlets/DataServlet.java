@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    public ArrayList<String> messages;
+    public ArrayList<String> messages = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -40,9 +40,10 @@ public class DataServlet extends HttpServlet {
     // response.getWriter().println("Hello, Gracie is testing the fetch() function!");
     //
     messages = new ArrayList<String>();
-    messages.add("Hello");
-    messages.add("Hi");
-    messages.add("Greetings");
+    // below commands was used in JSON tutorial
+    // messages.add("Hello");
+    // messages.add("Hi");
+    // messages.add("Greetings");
 
     String json = convertToJsonUsingGson(messages);
     response.setContentType("application/json;");
@@ -53,5 +54,20 @@ public class DataServlet extends HttpServlet {
       Gson gson = new Gson();
       String json = gson.toJson(m);
       return json;
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String text = request.getParameter("text-input");
+    messages.add(text);
+
+    // Respond with the result.
+    response.setContentType("text/html;");
+    response.getWriter().println("New Comment: " + text);
+    for (int i = 1; i < messages.size(); i++) {
+        response.getWriter().println("Comment: " + messages.get(i));
+
+    }
   }
 }
