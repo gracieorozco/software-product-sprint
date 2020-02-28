@@ -17,7 +17,12 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
@@ -33,24 +38,16 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // below command was used in servlet and fetch() tutorials
-    // response.setContentType("text/html;");
-    //
-    // below command was used in the servlet tutorial
-    // response.getWriter().println("<h1>Hello Gracie!</h1>");
-    //
-    // below command was used in the fetch() tutorial
-    // response.getWriter().println("Hello, Gracie is testing the fetch() function!");
-    //
     messages = new ArrayList<String>();
-    // below commands was used in JSON tutorial
-    // messages.add("Hello");
-    // messages.add("Hi");
-    // messages.add("Greetings");
-
-    String json = convertToJsonUsingGson(messages);
+    Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+    for (Entity entity : results.asIterable()) {
+        messages.add(entity.getProperty("content").toString());
+    }
+    String json_comments = convertToJsonUsingGson(messages);
     response.setContentType("application/json;");
-    response.getWriter().println(json);
+    response.getWriter().println(json_comments);
   }
 
   public String convertToJsonUsingGson(ArrayList<String> m) {
@@ -62,19 +59,13 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String text = request.getParameter("text-input");
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    long time = System.currentTimeMillis();
 
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Entity textEntity = new Entity("Comment");
     textEntity.setProperty("content", text);
+    textEntity.setProperty("time", time);
     datastore.put(textEntity);
     response.sendRedirect("/index.html");
-
-    // below was used for the POST() tutorial
-    // messages.add(text);
-    // response.setContentType("text/html;");
-    // response.getWriter().println("New Comment: " + text);
-    // for (int i = 1; i < messages.size(); i++) {
-    //     response.getWriter().println("Comment: " + messages.get(i));
-    // }
   }
 }
