@@ -30,15 +30,6 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // below command was used in servlet and fetch() tutorials
-    // response.setContentType("text/html;");
-    //
-    // below command was used in the servlet tutorial
-    // response.getWriter().println("<h1>Hello Gracie!</h1>");
-    //
-    // below command was used in the fetch() tutorial
-    // response.getWriter().println("Hello, Gracie is testing the fetch() function!");
-    //
     messages = new ArrayList<String>();
     messages.add("Hello");
     messages.add("Hi");
