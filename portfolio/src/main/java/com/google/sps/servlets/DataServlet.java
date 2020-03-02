@@ -26,26 +26,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    public ArrayList<String> messages = new ArrayList<String>();
+    public ArrayList<String> comment_list = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // below command was used in servlet and fetch() tutorials
-    // response.setContentType("text/html;");
-    //
-    // below command was used in the servlet tutorial
-    // response.getWriter().println("<h1>Hello Gracie!</h1>");
-    //
-    // below command was used in the fetch() tutorial
-    // response.getWriter().println("Hello, Gracie is testing the fetch() function!");
-    //
-    messages = new ArrayList<String>();
-    // below commands was used in JSON tutorial
-    // messages.add("Hello");
-    // messages.add("Hi");
-    // messages.add("Greetings");
+    comment_list = new ArrayList<String>();
 
-    String json = convertToJsonUsingGson(messages);
+    String json = convertToJsonUsingGson(comment_list);
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
@@ -60,13 +47,13 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     String text = request.getParameter("text-input");
-    messages.add(text);
+    comment_list.add(text);
 
     // Respond with the result.
     response.setContentType("text/html;");
     response.getWriter().println("New Comment: " + text);
-    for (int i = 1; i < messages.size(); i++) {
-        response.getWriter().println("Comment: " + messages.get(i));
+    for (int i = 1; i < comment_list.size(); i++) {
+        response.getWriter().println("Comment: " + comment_list.get(i));
 
     }
   }
