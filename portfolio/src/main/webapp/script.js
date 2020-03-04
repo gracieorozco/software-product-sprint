@@ -16,14 +16,12 @@
  * Adds a random fact to the page.
  */
 function addRandomFact() {
-    const facts =	
-    [
-        "I have been to over 30 states in the United States.", 
-        "I am the oldest of two children.",
-        "I can speak Spanish."
-    ];	
+  const facts = [
+    'I have been to over 30 states in the United States.',
+    'I am the oldest of two children.', 'I can speak Spanish.'
+  ];
 
-  // Pick a random fact.	
+  // Pick a random fact.
   const fact = facts[Math.floor(Math.random() * facts.length)];
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = fact;
@@ -32,29 +30,26 @@ function addRandomFact() {
 /**
  * Uses fetch() to obtain data from DataServlet.java
  */
- function obtainFetchData() {
-     fetch("/data")
-     .then(response => response.text())
-     .then(text => {
-         parse = JSON.parse(text)
-         for (var i = 0; i < parse.length; i++) {
-             p = document.createElement("p");
-             p.innerText = parse[i];
-             document.getElementById("fetch-div").appendChild(p);
-         }
-     })
-     .catch(() => {
-         document.getElementById("fetch-div").innerText = "Error!";
-     })
- }
+function obtainFetchData() {
+  fetch('/data')
+      .then(response => response.text())
+      .then(text => {
+        parse = JSON.parse(text)
+        for (var i = 0; i < parse.length; i++) {
+          p = document.createElement('p');
+          p.innerText = parse[i];
+          document.getElementById('fetch-div').appendChild(p);
+        }
+      })
+      .catch(() => {
+        document.getElementById('fetch-div').innerText = 'Error!';
+      })
+}
 
- function obtainComment() {
-     fetch("/data")
-     .then(response => response.json())
-     .then(comment => {
-         p = document.createElement("p");
-         p.innerText = "Test: " + comment;
-         comment-div.appendChild(p);
-     })
- }
-
+function obtainComment() {
+  fetch('/data').then(response => response.json()).then(comment => {
+    p = document.createElement('p');
+    p.innerText = 'Test: ' + comment;
+    comment - div.appendChild(p);
+  })
+}
