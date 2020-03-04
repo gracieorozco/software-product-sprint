@@ -51,10 +51,9 @@ public class DataServlet extends HttpServlet {
 
     // Respond with the result.
     response.setContentType("text/html;");
-    response.getWriter().println("New Comment: " + text);
+    response.getWriter().println("New Comment: " + text + "\n");
     for (int i = 1; i < comment_list.size(); i++) {
-        response.getWriter().println("Comment: " + comment_list.get(i));
-
+        response.getWriter().println("Comment: " + comment_list.get(i) + '\n');
     }
   }
 }

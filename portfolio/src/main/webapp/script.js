@@ -51,17 +51,6 @@ function addRandomFact() {
         .then(response => response.json())
         .then(messages => {
          console.log(messages)
-        //  const json_div = document.getElementById('json-div');
-        //  json_div.innerHTML = "";
-        //  p = document.createElement("p");
-        //  p.innerText = "Message 1: " + messages[0];
-        //  json_div.appendChild(p);
-        //  p = document.createElement("p");
-        //  p.innerText = "Message 2: " + messages[1];
-        //  json_div.appendChild(p);
-        //  p = document.createElement("p");
-        //  p.innerText = "Message 3: " + messages[2];
-        //  json_div.appendChild(p);
         })
         .catch((test) => {
             document.getElementById("json-div").innerText = "JSON Response Error";
