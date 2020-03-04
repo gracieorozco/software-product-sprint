@@ -28,3 +28,46 @@ function addRandomFact() {
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = fact;
 }
+
+/**
+ * Uses fetch() to obtain data from DataServlet.java
+ */
+ function obtain_fetch_data() {
+     fetch("/data")
+     .then(response => response.text())
+     .then(text => {
+         document.getElementById("fetch-div").innerText = text;
+     })
+     .catch(() => {
+         document.getElementById("fetch-div").innerText = "Error!";
+     })
+ }
+
+/**
+ * Uses fetch() to obtain json data from DataServlet.java
+ */
+ function obtain_json_data() {
+    fetch("/data")
+        .then(response => response.json())
+        .then(messages => {
+         console.log(messages)
+         const json_div = document.getElementById('json-div');
+         json_div.innerHTML = "";
+         p = document.createElement("p");
+         p.innerText = "Message 1: " + messages[0];
+         json_div.appendChild(p);
+         p = document.createElement("p");
+         p.innerText = "Message 2: " + messages[1];
+         json_div.appendChild(p);
+         p = document.createElement("p");
+         p.innerText = "Message 3: " + messages[2];
+         json_div.appendChild(p);
+        })
+        .catch((test) => {
+            document.getElementById("json-div").innerText = "JSON Response Error";
+            console.log(test);
+        })
+        .catch(() => {
+            document.getElementById("json-div").innerText = "JSON Text() Error";
+        });
+ }
