@@ -30,29 +30,14 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // below command was used in servlet and fetch() tutorials
-    // response.setContentType("text/html;");
-    //
-    // below command was used in the servlet tutorial
-    // response.getWriter().println("<h1>Hello Gracie!</h1>");
-    //
-    // below command was used in the fetch() tutorial
-    // response.getWriter().println("Hello, Gracie is testing the fetch() function!");
-    //
-    messages = new ArrayList<String>();
-    // below commands was used in JSON tutorial
-    // messages.add("Hello");
-    // messages.add("Hi");
-    // messages.add("Greetings");
-
     String json = convertToJsonUsingGson(messages);
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
-  public String convertToJsonUsingGson(ArrayList<String> m) {
+  public String convertToJsonUsingGson(ArrayList<String> message_arraylist) {
       Gson gson = new Gson();
-      String json = gson.toJson(m);
+      String json = gson.toJson(message_arraylist);
       return json;
   }
 
