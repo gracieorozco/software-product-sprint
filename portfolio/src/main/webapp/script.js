@@ -50,11 +50,9 @@ function addRandomFact() {
     fetch("/data")
         .then(response => response.json())
         .then(messages => {
-         console.log(messages)
         })
-        .catch((test) => {
+        .catch(test => {
             document.getElementById("json-div").innerText = "JSON Response Error";
-            console.log(test);
         })
         .catch(() => {
             document.getElementById("json-div").innerText = "JSON Text() Error";
