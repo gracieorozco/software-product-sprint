@@ -64,7 +64,7 @@ function addRandomFact() {
      .then(response => response.json())
      .then(comment => {
          p = document.createElement("p");
-         p.innerText = "Test: " + comment;
+         p.innerText = "Comment: " + comment;
          comment-div.appendChild(p);
      })
  }
