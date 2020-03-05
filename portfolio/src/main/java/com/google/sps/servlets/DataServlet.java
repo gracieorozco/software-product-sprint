@@ -65,7 +65,7 @@ public class DataServlet extends HttpServlet {
     String text = request.getParameter("text-input");
     long time = System.currentTimeMillis();
     
-    // Stores the result retrieved fromt the sentiment analyzer into a SentimentScore object
+    // Stores the result retrieved from the sentiment analyzer into a SentimentScore object
     Document doc = Document.newBuilder().setContent(text).setType(Document.Type.PLAIN_TEXT).build();
     LanguageServiceClient languageService = LanguageServiceClient.create();
     Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
