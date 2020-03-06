@@ -35,13 +35,11 @@ function obtainFetchData() {
   fetch('/data')
       .then(response => response.json())
       .then(text_data => {
-          console.log(text_data)
         for (var i = 0; i < text_data.length; i++) {
-            // Debug message below was requested by the tutorial
-            console.log("Message of \'" + text_data[i].content + "\' = " + text_data[i].score_message);
-            p = document.createElement('p');
-            p.innerText = text_data[i].content;
-            document.getElementById('fetch-div').appendChild(p);
+          p = document.createElement('p');
+          p.innerText =
+              text_data[i].content + '\n' + text_data[i].score_message;
+          document.getElementById('fetch-div').appendChild(p);
         }
       })
       .catch(() => {
