@@ -227,18 +227,11 @@
       <button onclick="addRandomFact()">Press</button>
       <div id="fact-container"></div>
       <h2>Week 2</h2>
-      <p>Click <a href="/data">here</a> to try out a week 2 servlet page</p>
-      <p>
-          Below is a button that uses a fetch() function to retrieve data 
-          from a DataServlet.java file.
-      </p>
-      <button onclick="obtain_fetch_data()">Press</button>
-      <div id="fetch-div"></div>
-      <p>
-          The following button fetches data from a JSON object.
-      </p>
-      <button onclick="obtain_json_data()">Press</button>
-      <div id="json-div"></div>
+      <form action="/data" method="POST">
+          <textarea name="text-input" id="comment-id">Write a comment</textarea> 
+          <input type="submit"></input>
+      </form>
+      <div id="comment-id"></div>
     </div>
   </body>
 </html>
