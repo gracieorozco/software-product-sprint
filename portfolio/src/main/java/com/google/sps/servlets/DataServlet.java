@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    public ArrayList<String> messages = new ArrayList<String>();
+    public ArrayList<String> comment_list = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -45,14 +45,13 @@ public class DataServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
     String text = request.getParameter("text-input");
-    messages.add(text);
+    comment_list.add(text);
 
     // Respond with the result.
     response.setContentType("text/html;");
-    response.getWriter().println("New Comment: " + text);
-    for (int i = 1; i < messages.size(); i++) {
-        response.getWriter().println("Comment: " + messages.get(i));
-
+    response.getWriter().println("New Comment: " + text + "\n");
+    for (int i = 1; i < comment_list.size(); i++) {
+        response.getWriter().println("Comment: " + comment_list.get(i) + '\n');
     }
   }
 }
