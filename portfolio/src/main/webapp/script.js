@@ -16,14 +16,12 @@
  * Adds a random fact to the page.
  */
 function addRandomFact() {
-    const facts =	
-    [
-        "I have been to over 30 states in the United States.", 
-        "I am the oldest of two children.",
-        "I can speak Spanish."
-    ];	
+  const facts = [
+    'I have been to over 30 states in the United States.',
+    'I am the oldest of two children.', 'I can speak Spanish.'
+  ];
 
-  // Pick a random fact.	
+  // Pick a random fact.
   const fact = facts[Math.floor(Math.random() * facts.length)];
   const factContainer = document.getElementById('fact-container');
   factContainer.innerText = fact;
@@ -32,40 +30,36 @@ function addRandomFact() {
 /**
  * Uses fetch() to obtain data from DataServlet.java
  */
- function obtain_fetch_data() {
-     fetch("/data")
-     .then(response => response.text())
-     .then(text => {
-         document.getElementById("fetch-div").innerText = text;
-     })
-     .catch(() => {
-         document.getElementById("fetch-div").innerText = "Error!";
-     })
- }
+function obtain_fetch_data() {
+  fetch('/data')
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById('fetch-div').innerText = text;
+      })
+      .catch(() => {
+        document.getElementById('fetch-div').innerText = 'Error!';
+      })
+}
 
 /**
  * Uses fetch() to obtain json data from DataServlet.java
  */
- function obtain_json_data() {
-    fetch("/data")
-        .then(response => response.json())
-        .then(messages => {
-        })
-        .catch(test => {
-            document.getElementById("json-div").innerText = "JSON Response Error";
-        })
-        .catch(() => {
-            document.getElementById("json-div").innerText = "JSON Text() Error";
-        });
- }
+function obtain_json_data() {
+  fetch('/data')
+      .then(response => response.json())
+      .then(messages => {})
+      .catch(test => {
+        document.getElementById('json-div').innerText = 'JSON Response Error';
+      })
+      .catch(() => {
+        document.getElementById('json-div').innerText = 'JSON Text() Error';
+      });
+}
 
- function obtain_comment() {
-     fetch("/data")
-     .then(response => response.json())
-     .then(comment => {
-         p = document.createElement("p");
-         p.innerText = "Comment: " + comment;
-         comment-div.appendChild(p);
-     })
- }
-
+function obtain_comment() {
+  fetch('/data').then(response => response.json()).then(comment => {
+    p = document.createElement('p');
+    p.innerText = 'Comment: ' + comment;
+    comment - div.appendChild(p);
+  })
+}
