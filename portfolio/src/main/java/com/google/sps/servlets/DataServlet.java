@@ -25,29 +25,19 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-
-    public ArrayList<String> comment_list = new ArrayList<String>();
+  public ArrayList<String> comment_list = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
     String json = convertToJsonUsingGson(comment_list);
-
-    messages = new ArrayList<String>();
-    messages.add("Hello");
-    messages.add("Hi");
-    messages.add("Greetings");
-
-    String json = convertToJsonUsingGson(messages);
-
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
-  public String convertToJsonUsingGson(ArrayList<String> message_arraylist) {
-      Gson gson = new Gson();
-      String json = gson.toJson(message_arraylist);
-      return json;
+  public String convertToJsonUsingGson(ArrayList<String> comment_arraylist) {
+    Gson gson = new Gson();
+    String json = gson.toJson(comment_arraylist);
+    return json;
   }
 
   @Override
@@ -58,9 +48,9 @@ public class DataServlet extends HttpServlet {
 
     // Respond with the result.
     response.setContentType("text/html;");
-    response.getWriter().println("New Comment: " + text + "\n");
-    for (int i = 1; i < comment_list.size(); i++) {
-        response.getWriter().println("Comment: " + comment_list.get(i) + '\n');
+    response.getWriter().println("New Comment: " + text);
+    for (int i = 0; i < comment_list.size(); i++) {
+      response.getWriter().println("Comment: " + comment_list.get(i));
     }
   }
 }
