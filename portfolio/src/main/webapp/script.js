@@ -30,36 +30,26 @@ function addRandomFact() {
 /**
  * Uses fetch() to obtain data from DataServlet.java
  */
-function obtain_fetch_data() {
+function obtainFetchData() {
   fetch('/data')
       .then(response => response.text())
       .then(text => {
-        document.getElementById('fetch-div').innerText = text;
+        parse = JSON.parse(text)
+        for (var i = 0; i < parse.length; i++) {
+          p = document.createElement('p');
+          p.innerText = parse[i];
+          document.getElementById('fetch-div').appendChild(p);
+        }
       })
       .catch(() => {
         document.getElementById('fetch-div').innerText = 'Error!';
       })
 }
 
-/**
- * Uses fetch() to obtain json data from DataServlet.java
- */
-function obtain_json_data() {
-  fetch('/data')
-      .then(response => response.json())
-      .then(messages => {})
-      .catch(test => {
-        document.getElementById('json-div').innerText = 'JSON Response Error';
-      })
-      .catch(() => {
-        document.getElementById('json-div').innerText = 'JSON Text() Error';
-      });
-}
-
-function obtain_comment() {
+function obtainComment() {
   fetch('/data').then(response => response.json()).then(comment => {
     p = document.createElement('p');
-    p.innerText = 'Comment: ' + comment;
+    p.innerText = 'Test: ' + comment;
     comment - div.appendChild(p);
   })
 }

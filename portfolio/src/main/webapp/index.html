@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="obtainFetchData()">
     <div id="content">
       <h1>Gracie's Portfolio</h1>
       <img width="200px" height="200px" src="/images/my_photo.jpg"/>
@@ -226,12 +226,13 @@
       <p>Click here to get a random fact about myself:</p>
       <button onclick="addRandomFact()">Press</button>
       <div id="fact-container"></div>
-      <h2>Week 2</h2>
+      <h2>Comments</h2>
+      <div id="fetch-div"></div>
+      <h3>Add a comment</h3>
       <form action="/data" method="POST">
           <textarea name="text-input" id="comment-id">Write a comment</textarea> 
           <input type="submit"></input>
       </form>
-      <div id="comment-id"></div>
     </div>
   </body>
 </html>
