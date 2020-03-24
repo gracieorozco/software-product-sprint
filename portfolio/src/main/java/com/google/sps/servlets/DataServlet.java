@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+import com.google.sps.data.SentimentScore;
 import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
@@ -63,19 +64,23 @@ public class DataServlet extends HttpServlet {
     String text = request.getParameter("text-input");
     long time = System.currentTimeMillis();
     
-    // Prints result retrieved from sentiment analysis
+    // Stores the result retrieved from the sentiment analyzer into a SentimentScore object
     Document doc = Document.newBuilder().setContent(text).setType(Document.Type.PLAIN_TEXT).build();
     LanguageServiceClient languageService = LanguageServiceClient.create();
     Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
     float score = sentiment.getScore();
     languageService.close();
-    System.out.println("Score:" + score);
+
+    // Print out the score value from the SentimentScore class
+    SentimentScore analyzed_score = new SentimentScore(score);
+    System.out.println(analyzed_score.CreateMessage());
 
     // Setting properties of an entity object
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Entity textEntity = new Entity("Comment");
     textEntity.setProperty("content", text);
     textEntity.setProperty("time", time);
+    textEntity.setProperty("score", analyzed_score.GetScore());
 
     // Storing and redirecting
     datastore.put(textEntity);
