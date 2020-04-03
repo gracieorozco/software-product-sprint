@@ -51,7 +51,6 @@ public class DataServlet extends HttpServlet {
         individual_message.put("score_message", entity.getProperty("score_message").toString());
         messages.add(individual_message);
     }
-    //Gson gson = new Gson();
     String json = convertToJsonUsingGson(messages);
     response.setContentType("application/json;");
     response.getWriter().println(json);
