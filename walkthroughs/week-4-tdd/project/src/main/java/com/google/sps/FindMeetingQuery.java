@@ -40,10 +40,10 @@ public final class FindMeetingQuery {
     // if the request attendees is related to the attendees of the event. If
     // the event attendees do not match the request attendees, then the event
     // is ignored since it is not related to the request. 
-    for (Event e: events) {
-        for (String r : request_attendees_list) {
-             if (e.getAttendees().contains(r)) {
-                 event_list.add(e);
+    for (Event event : events) {
+        for (String event_request : request_attendees_list) {
+             if (event.getAttendees().contains(event_request)) {
+                 event_list.add(event);
                  break;
              }
         }
@@ -55,28 +55,28 @@ public final class FindMeetingQuery {
     // If there is a single related event, return the range from before and after the event. 
     if (event_list.size() == 1) {
         List<TimeRange> single_time_range_list = new ArrayList<TimeRange>();
-        for (Event e : event_list) {
-            single_time_range_list.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, e.getWhen().start(), false));
-            single_time_range_list.add(TimeRange.fromStartEnd(e.getWhen().end(), TimeRange.END_OF_DAY, true));
+        for (Event event : event_list) {
+            single_time_range_list.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, event.getWhen().start(), false));
+            single_time_range_list.add(TimeRange.fromStartEnd(event.getWhen().end(), TimeRange.END_OF_DAY, true));
         }
         return single_time_range_list;
     }
     // If there are more than one related event, then follow more specific steps below. 
-    if (events.size() > 1) {
+    if (event_list.size() > 1) {
         List<TimeRange> multiple_time_range_list = new ArrayList<TimeRange>();
         List<Integer> start_time_list = new ArrayList<Integer>();
         List<Integer> end_time_list = new ArrayList<Integer>();
         // Add the start and end times for each event into a list. 
-        for (Event e : event_list) {
-            start_time_list.add(e.getWhen().start());
-            end_time_list.add(e.getWhen().end());
+        for (Event event : event_list) {
+            start_time_list.add(event.getWhen().start());
+            end_time_list.add(event.getWhen().end());
         }
         // If the starting time is not 0, then create the first time range from
         // the morning to the first element of start_time_list. 
         if (start_time_list.get(0) != 0) {
             multiple_time_range_list.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, start_time_list.get(0), false));
         }
-        // Loop to check to if the first element in end_time_list at is less 
+        // Loop to check to see if the first element in end_time_list at i is less 
         // than the start_time_list at i+1. If the statement is true, then
         // a time range is added ranging from the element of end_time_list at 
         // i to the start_time i+1. Otherwise, the for loop skips it. This
