@@ -36,10 +36,10 @@ function obtainFetchData() {
       .then(response => response.json())
       .then(text_data => {
         for (var i = 0; i < text_data.length; i++) {
-          p = document.createElement('p');
-          p.innerText =
-              text_data[i].content + '\n' + text_data[i].score_message;
-          document.getElementById('fetch-div').appendChild(p);
+            // Debug message below was requested by the tutorial
+            p = document.createElement('p');
+            p.innerText = text_data[i].content;
+            document.getElementById('fetch-div').appendChild(p);
         }
       })
       .catch(() => {
