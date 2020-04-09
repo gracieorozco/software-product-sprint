@@ -31,14 +31,17 @@ function addRandomFact() {
  * Uses fetch() to obtain data from DataServlet.java
  */
 function obtainFetchData() {
+  document.getElementById('fetch-div').innerText = '';
   fetch('/data')
-      .then(response => response.text())
-      .then(text => {
-        parse = JSON.parse(text)
-        for (var i = 0; i < parse.length; i++) {
-          p = document.createElement('p');
-          p.innerText = parse[i];
-          document.getElementById('fetch-div').appendChild(p);
+      .then(response => response.json())
+      .then(text_data => {
+          console.log(text_data)
+        for (var i = 0; i < text_data.length; i++) {
+            // Debug message below was requested by the tutorial
+            console.log("Message of \'" + text_data[i].content + "\' = " + text_data[i].score_message);
+            p = document.createElement('p');
+            p.innerText = text_data[i].content;
+            document.getElementById('fetch-div').appendChild(p);
         }
       })
       .catch(() => {

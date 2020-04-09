@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,23 +41,26 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArrayList<String> messages = new ArrayList<String>();
+    ArrayList<HashMap<String, String>> messages = new ArrayList<HashMap<String, String>>();
     Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
-      messages.add(entity.getProperty("content").toString());
+        HashMap<String, String> individual_message = new HashMap<String, String>();
+        individual_message.put("content", entity.getProperty("content").toString());
+        individual_message.put("score_message", entity.getProperty("score_message").toString());
+        messages.add(individual_message);
     }
-    String json_comments = convertToJsonUsingGson(messages);
+    String json = convertToJsonUsingGson(messages);
     response.setContentType("application/json;");
-    response.getWriter().println(json_comments);
+    response.getWriter().println(json);
   }
 
-  public String convertToJsonUsingGson(ArrayList<String> message_arraylist) {
-    Gson gson = new Gson();
-    String json = gson.toJson(message_arraylist);
+public String convertToJsonUsingGson(ArrayList<HashMap<String, String>> m) {	
+    Gson gson = new Gson();	
+    String json = gson.toJson(m);	
     return json;
-  }
+}
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -70,17 +74,14 @@ public class DataServlet extends HttpServlet {
     Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
     float score = sentiment.getScore();
     languageService.close();
-
-    // Print out the score value from the SentimentScore class
     SentimentScore analyzed_score = new SentimentScore(score);
-    System.out.println(analyzed_score.CreateMessage());
 
     // Setting properties of an entity object
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Entity textEntity = new Entity("Comment");
     textEntity.setProperty("content", text);
     textEntity.setProperty("time", time);
-    textEntity.setProperty("score", analyzed_score.GetScore());
+    textEntity.setProperty("score_message", analyzed_score.CreateMessage());
 
     // Storing and redirecting
     datastore.put(textEntity);
