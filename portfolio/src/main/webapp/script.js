@@ -43,7 +43,7 @@ function obtainFetchData() {
         }
       })
       .catch(() => {
-        document.getElementById('fetch-div').innerText = 'Error!';
+        console.log('Error: ', error)
       })
 }
 
