@@ -45,10 +45,10 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
-        HashMap<String, String> individual_message = new HashMap<String, String>();
-        individual_message.put("content", entity.getProperty("content").toString());
-        individual_message.put("score_message", entity.getProperty("score_message").toString());
-        messages.add(individual_message);
+      HashMap<String, String> individual_message = new HashMap<String, String>();
+      individual_message.put("content", entity.getProperty("content").toString());
+      individual_message.put("score_message", entity.getProperty("score_message").toString());
+      messages.add(individual_message);
     }
     String json = convertToJsonUsingGson(messages);
     response.setContentType("application/json;");
