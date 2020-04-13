@@ -14,17 +14,17 @@
 
 package com.google.sps.servlets;
 
-import com.google.sps.data.SentimentScore;
-import com.google.cloud.language.v1.Document;
-import com.google.cloud.language.v1.LanguageServiceClient;
-import com.google.cloud.language.v1.Sentiment;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
 import com.google.gson.Gson;
+import com.google.sps.data.SentimentScore;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,7 +38,6 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     ArrayList<HashMap<String, String>> messages = new ArrayList<HashMap<String, String>>();
@@ -46,10 +45,10 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
     for (Entity entity : results.asIterable()) {
-        HashMap<String, String> individual_message = new HashMap<String, String>();
-        individual_message.put("content", entity.getProperty("content").toString());
-        individual_message.put("score_message", entity.getProperty("score_message").toString());
-        messages.add(individual_message);
+      HashMap<String, String> individual_message = new HashMap<String, String>();
+      individual_message.put("content", entity.getProperty("content").toString());
+      individual_message.put("score_message", entity.getProperty("score_message").toString());
+      messages.add(individual_message);
     }
     String json = convertToJsonUsingGson(messages);
     response.setContentType("application/json;");
@@ -67,7 +66,7 @@ public String convertToJsonUsingGson(ArrayList<HashMap<String, String>> m) {
     // Retrieve inputs
     String text = request.getParameter("text-input");
     long time = System.currentTimeMillis();
-    
+
     // Stores the result retrieved from the sentiment analyzer into a SentimentScore object
     Document doc = Document.newBuilder().setContent(text).setType(Document.Type.PLAIN_TEXT).build();
     LanguageServiceClient languageService = LanguageServiceClient.create();
